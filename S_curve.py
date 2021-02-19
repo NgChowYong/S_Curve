@@ -22,8 +22,7 @@ class scurve:
         self.last_acc = 0
 
         self.state = 0
-        self.threshold_for_slow = self.max_acc * self.max_acc / (2 * self.max_jerk)
-
+        self.threshold_for_slow = 0
         self.half = 0
 
     def setup(self, start_speed, desire_speed):
