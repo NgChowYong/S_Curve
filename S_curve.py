@@ -167,14 +167,21 @@ for i in vel_output:
     last_v = i
     last_a = a
 
-plt.show()
+##plt.show()
+##
+##plt.figure(1)
+##plt.plot(vel_output,label="vel")
+##plt.plot(vel_output2,label="desire_vel")
+##plt.figure(2)
+##plt.plot(acc_output,label="acc")
+##plt.figure(3)
+##plt.plot(jerk_output,label="jerk")
+##plt.legend()
+##plt.show()
 
-plt.figure(1)
-plt.plot(vel_output,label="vel")
-plt.plot(vel_output2,label="desire_vel")
-plt.figure(2)
-plt.plot(acc_output,label="acc")
-plt.figure(3)
-plt.plot(jerk_output,label="jerk")
-plt.legend()
+fig, axs = plt.subplots(3, 1, sharex='all')
+axs[0].plot(vel_output,label="vel")
+axs[0].plot(vel_output2,label="desire_vel")
+axs[1].plot(acc_output,label="acc")
+axs[2].plot(jerk_output,label="jerk")
 plt.show()
