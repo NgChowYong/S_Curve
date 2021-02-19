@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 # vel command
-vel_input = [1,1.5,1.0,0.5,0.3,1.1,1.15,1.5,1.05,1.8,2,0] # all in m/s
+vel_input = [1,1.5,1.5,1.5,1.0,0.5,0.3,1.1,1.15,1.5,1.05,1.8,2,0.1,0] # all in m/s
 
 
 class scurve:
@@ -141,9 +141,12 @@ for i in range(500):
         if len(vel_input) > 0:
             last_new_input = new_input
             new_input = vel_input.pop(0)
+        else:
+            new_input = 0
+            
         if new_input != last_new_input:
             sc.setup(vel, new_input)
-
+            
     # 1 ms control rate
     delta_t = 1 # 1 ms
     if i % delta_t == 0: # get new message
@@ -180,8 +183,17 @@ for i in vel_output:
 ##plt.show()
 
 fig, axs = plt.subplots(3, 1, sharex='all')
+axs[0].set_title('velocity and desire velocity')
 axs[0].plot(vel_output,label="vel")
 axs[0].plot(vel_output2,label="desire_vel")
+axs[0].legend()
+axs[0].grid()
+axs[1].set_title('acceleration')
 axs[1].plot(acc_output,label="acc")
+axs[1].legend()
+axs[1].grid()
+axs[2].set_title('jerk')
 axs[2].plot(jerk_output,label="jerk")
+axs[2].legend()
+axs[2].grid()
 plt.show()
