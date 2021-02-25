@@ -7,10 +7,11 @@ vel_input = [1,1.5,1.5,1.5,1.0,0.5,0.3,1.1,1.15,1.5,1.05,1.8,2,0.1,0] # all in m
 
 class scurve:
     def __init__(self):
-        self.max_speed = 20 # in m / s^2
-        self.max_acc = 180 # in m / s^2
-        self.max_jerk = 10000 # in m / s^2
+        self.max_speed = 20# in m / s^2
+        self.max_acc = 100# in m / s^2
+        self.max_jerk = 5000 # in m / s^2
         self.desire_speed = 0
+        self.scale = 1
 
         self.vel_threshold = 0.01
         self.acc_threshold = 0.001
@@ -46,10 +47,10 @@ class scurve:
                 self.vel = self.desire_speed
             self.state = 1
             self.dec_for_jerk = 0
-            self.threshold_for_slow = self.acc_for_jerk * self.acc_for_jerk / (2 * self.max_jerk)
+            self.threshold_for_slow = self.acc * self.acc / (2 * self.max_jerk) * self.scale
             if self.desire_speed - curr_vel <= self.threshold_for_slow:
-                # self.acc_for_jerk -= self.max_jerk * (self.acc/self.acc_for_jerk) * delta_time
-                self.acc_for_jerk -= self.max_jerk * delta_time
+                self.acc_for_jerk -= self.acc * self.acc/(2*(self.desire_speed - curr_vel)) * delta_time
+                # self.acc_for_jerk -= self.max_jerk * delta_time
                 # small increment
                 if self.acc_for_jerk <= self.acc_threshold:
                     self.acc_for_jerk = self.acc_threshold
@@ -66,11 +67,11 @@ class scurve:
             self.state = 2
             # decreasing speed
             self.acc_for_jerk = 0
-            self.threshold_for_slow = (self.dec_for_jerk * self.dec_for_jerk / (2 * self.max_jerk))
+            self.threshold_for_slow = (self.acc * self.acc / (2 * self.max_jerk)) * self.scale
             if curr_vel - self.desire_speed <= self.threshold_for_slow:
                 # decrease speed with constant jerk
-                # self.dec_for_jerk += self.max_jerk * (self.acc / self.dec_for_jerk) * delta_time
-                self.dec_for_jerk += self.max_jerk * delta_time
+                self.dec_for_jerk += self.acc * self.acc/(2*(curr_vel - self.desire_speed)) * delta_time
+                # self.dec_for_jerk += self.max_jerk * delta_time
                 if self.dec_for_jerk >= -self.acc_threshold:
                     self.dec_for_jerk = -self.acc_threshold
                 self.vel = curr_vel + self.dec_for_jerk * delta_time
@@ -104,9 +105,9 @@ vel_output = []
 vel_output2 = []
 
 # time goes from 0 to 1500 ms = 1.5 s for simulation
-for i in range(170):
+for i in range(1000):
     # example: get input in 10 hz = 0.1s = 100ms, then i = 100
-    if i % 100 == 0: # get new message
+    if i % 70 == 0: # get new message
         if len(vel_input) > 0:
             last_new_input = new_input
             new_input = vel_input.pop(0)
