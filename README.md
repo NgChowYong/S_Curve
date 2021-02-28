@@ -1,6 +1,6 @@
 # S_Curve for velocity smoothing
 
-Algorithm for smoothing velocity command under constant acceleration and adaptive jerk consideration, used for motor control signal smoothing
+Algorithm for smoothing velocity command under constant acceleration and adaptive jerk consideration, used for motor control signal smoothing.
 
 Author: Ng Chow Yong
 
@@ -29,7 +29,7 @@ In order to generate smooth velocity curve, the curve can be separated into acce
 
 As for deceleration region, when to turn into deceleration region is crucial and needed to be determine. According to equation below:
 
-v<sub>&delta;</sub> = a^2 / 2*j<sub>max;</sub>
+&delta;v = a^2 / (2*j<sub>max</sub>)
 
 After v<sub>&delta;</sub> is obtained, to avoid digital integral error, update of jerk is necessarily for since constant jerk will reach the desire velocity only in ideal condition. The update of jerk is based on same equation but determined by current difference of velocity. A threshold for acceleration_jiggle is introduced to avoid jiggle due to numerical imprecision.
 
