@@ -31,7 +31,9 @@ As for deceleration region, when to turn into deceleration region is crucial and
 
 &delta;v = a^2 / (2*j<sub>max</sub>)
 
-After v<sub>&delta;</sub> is obtained, to avoid digital integral error, update of jerk is necessarily for since constant jerk will reach the desire velocity only in ideal condition. The update of jerk is based on same equation but determined by current difference of velocity. A threshold for acceleration_jiggle is introduced to avoid jiggle due to numerical imprecision.
+Note: The equation is obtained by constant jerk motion equation.
+
+After &delta;v is obtained, to avoid digital integral error, update of jerk is necessarily for since constant jerk will reach the desire velocity only in ideal condition. The update of jerk is based on same equation but determined by current difference of velocity. A threshold for acceleration_jiggle is introduced to avoid jiggle due to numerical imprecision.
 
 The overall output is shown below:
 
